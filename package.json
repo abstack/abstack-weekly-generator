@@ -1,0 +1,15 @@
+{
+  "name": "weekly-table-generator",
+  "version": "0.1.0",
+  "description": "A beautiful table generator of weekly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.abstack.com:PeachScript/weekly-table-generator.git"
+  },
+  "author": "Abstack Tech Front End",
+  "license": "MIT"
+}
