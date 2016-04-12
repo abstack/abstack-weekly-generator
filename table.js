@@ -33,6 +33,7 @@ var Table = {
     cell.value=cell.innerHTML;
     var input = document.createElement('input');
     cell.appendChild(input);
+    input.focus();
     input.type='text';
     input.value=cell.value;
   },
@@ -40,6 +41,7 @@ var Table = {
   unfocus : function(cell){
     var input = cell.getElementsByTagName('input')[0];
     cell.innerHTML = input.value;
+    input.blur();
     input.parentNode.removeChild(input);
   },
   focusNextCell : function(cell){
