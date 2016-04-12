@@ -112,6 +112,29 @@
     box-shadow: 0 3px 15px rgba(0,0,0,.3);
     transform: scale(1.1);
   }
+  table tr{
+    counter-increment: item-number;
+  }
+  table tr:first-child,
+  table tr:nth-child(2){
+    counter-increment: none;
+  }
+  table tr{
+    counter-increment: item-number;
+  }
+  table tr td:first-child{
+    width: 50px;
+    pointer-events: none;
+  }
+  table tr:first-child td:first-child:after,
+  table tr:nth-child(2) td:first-child:after{
+    content: none;
+  }
+  table tr td:first-child:after{
+    content: counter(item-number);
+    display: block;
+    text-align: center;
+  }
   </style>
 </head>
 <body>
