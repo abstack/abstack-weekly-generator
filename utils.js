@@ -1,29 +1,29 @@
 ;(function (global) {
-  global.utils = {
-    doc: null,
-    isHaveShift: function(key) {
-      for(var i in key) {
-        if(key[i] === 16) {
-          key.splice(key[i], 1);
-          return true;
-        }
+  var doc = null;
+  function isHaveShift(key) {
+    for(var i in key) {
+      if (key[i] === 16) {
+        key.splice(key[i], 1);
+        return true;
       }
-      return false;
-    },
+    }
+    return false;
+  }
+  global.utils = {
     bind: function(element, key, callback) {
-      if(!element || !key) {
+      if (!element || !key) {
         throw new Error('参数不能为空');
       }
 
       doc = element.addEventListener('keydown', function(event) {
 
-        if(key.length === 1) {
-          if(event.shiftKey === false && event.keyCode === key[0]) {
+        if (key.length === 1) {
+          if (event.shiftKey === false && event.keyCode === key[0]) {
             callback.call(null, this);
           }
-        } else if(key.length > 1) {
-          if(this.isHaveShift(key)) {
-            if(event.shiftKey === true && event.keyCode === key[0]) {
+        } else if (key.length > 1) {
+          if (isHaveShift(key)) {
+            if (event.shiftKey === true && event.keyCode === key[0]) {
               callback.call(null, this);
             }
           }
@@ -35,7 +35,7 @@
     },
 
     unbind: function (element, key, callback) {
-      element.removeEventListener('keydown', this.doc);
+      element.removeEventListener('keydown', doc);
 
       return callback;
     },
