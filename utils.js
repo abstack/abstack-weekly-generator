@@ -39,8 +39,7 @@ function unbind(element, key, callback) {
 
 function copyElement(element) {
   var range = document.createRange();
-  range.selectNode(element);
-  console.log(range)
+  range.selectNodeContents(element);
   window.getSelection().addRange(range);
 
   try {
