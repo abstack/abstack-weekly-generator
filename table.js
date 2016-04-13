@@ -118,7 +118,6 @@
           setTimeout(function () {
             cell.innerHTML = input.value;
           }, 1);
-          cell.removeChild(input);
         });
       }
     })
