@@ -9,6 +9,7 @@
       {
         "props": false
       }
-    ]
+    ],
+    "no-use-before-define": ["error", "nofunc"]
   }
 }
