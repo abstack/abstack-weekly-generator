@@ -11,5 +11,9 @@
     "url": "git@gitlab.abstack.com:PeachScript/weekly-table-generator.git"
   },
   "author": "Abstack Tech Front End",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-airbnb": "^7.0.0",
+    "eslint-plugin-react": "^4.3.0"
+  }
 }
