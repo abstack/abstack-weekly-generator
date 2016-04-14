@@ -155,7 +155,7 @@
     prop.forEach((item, index) => {
       item.row = tableData[index];
     });
-    return prop;
+    return JSON.stringify(prop);
   }
   weeklyTable.init = (box, props) => {
     props.forEach((item) => {
