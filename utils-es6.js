@@ -106,7 +106,7 @@
    */
   utils.load = () => localStorage.getItem('save');
 
-  if (!global.utils) {
+  if (global.utils) {
     throw new Error('There has utils already, cannot export utils!');
   } else {
     global.utils = utils;
