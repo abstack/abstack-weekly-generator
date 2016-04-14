@@ -33,17 +33,25 @@
       write(td);
       tr.appendChild(td);
     });
+    tr.getElementsByTagName('td')[0].innerHTML = table.getElementsByTagName('tr').length - 2;
     tr.getElementsByTagName('td')[1].click();
   }
 
   // 删除当前行
   function deleteLine(cell) {
     const tr = cell.parentNode;
+    const table = tr.parentNode;
     const trs = tr.parentNode.getElementsByTagName('tr').length;
     if (trs > 3) {
       utils.confirm('确认删除吗？');
       tr.parentNode.removeChild(tr);
     }
+    const tableRow = table.getElementsByTagName('tr');
+    Array.prototype.forEach.call(tableRow, (tro, index) => {
+      if (index > 1) {
+        tro.getElementsByTagName('td')[0].innerHTML = index - 1;
+      }
+    });
   }
 
   // 编辑数据
@@ -125,7 +133,7 @@
     Array.prototype.forEach.call(cells, (cell) => {
       rowData.push(cell.innerHTML);
     });
-    return rowData.slice(1);
+    return rowData;
   }
   // 获取表数据
   function getTableData(table) {
@@ -168,9 +176,6 @@
 
       // 表头
       table.appendChild(title);
-      const numberBox = document.createElement('td');
-      numberBox.innerHTML = '序号';
-      title.appendChild(numberBox);
       item.title.forEach((titlename) => {
         const titleTxt = document.createElement('td');
         titleTxt.className = 'table-title';
@@ -180,15 +185,13 @@
       // 数据
       if (item.row.length === 0) {
         const cells = document.createElement('tr');
-        const number = document.createElement('td');
-        number.innerHTML = '1';
         table.appendChild(cells);
-        cells.appendChild(number);
         item.title.forEach(() => {
           const cellTxt = document.createElement('td');
           cells.appendChild(cellTxt);
           write(cellTxt);
         });
+        cells.getElementsByTagName('td')[0].innerHTML = '1';
       } else {
         item.row.forEach((row, index) => {
           const cells = document.createElement('tr');
@@ -205,20 +208,7 @@
         });
       }
     });
-    return {
-      focusPrevCell: (el) => {
-        focusPrevCell(el);
-      },
-      focusNextCell: (el) => {
-        focusNextCell(el);
-      },
-      createNewLine: (el) => {
-        createNewLine(el);
-      },
-      exportData: (el, array) => {
-        exportData(el, array);
-      },
-    };
+    utils.save(3, () => exportData(box, props));
   };
 
   if (global.weeklyTable) {
