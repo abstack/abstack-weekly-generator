@@ -1,206 +1,230 @@
-;(function(global) {
-  global.init = function(box,props) {
-    for(var x = 0;x < props.length;x++) {
+((global) => {
+  const weeklyTable = {};
 
-      //表格
-      var table = document.createElement('table');
-      box.appendChild(table);
-
-      //标题
-      var tr = document.createElement('tr');
-      table.appendChild(tr);
-      var td = document.createElement('td');
-      td.className="table-header";
-      td.setAttribute("colspan",props[x].title.length);
-      td.innerHTML = props[x].head;
-      tr.appendChild(td);
-
-      //表头
-      var tr = document.createElement('tr');
-      table.appendChild(tr);
-      for(var a = 0; a<props[x].title.length; a++) {
-        var td = document.createElement('td');
-        td.className="table-title";
-        td.innerHTML = props[x].title[a];
-        tr.appendChild(td);
-      }
-
-      //数据
-      if (props[x].row.length == 0) {
-        var tr = document.createElement('tr');
-        table.appendChild(tr);
-        for(var a = 0; a < props[x].title.length; a++) {
-          var td = document.createElement('td');
-          tr.appendChild(td);
-          write(td);
-        }
-      }else{
-        for(var i = 0; i < props[x].row.length; i++) {
-          var tr = document.createElement('tr');
-          table.appendChild(tr);
-          var td = document.createElement('td');
-          tr.appendChild(td);
-          for(var a = 0; a < props[x].title.length-1; a++) {
-            var td = document.createElement('td');
-            td.innerHTML = props[x].row[i][a];
-            tr.appendChild(td);
-            write(td);
-          }
-        }
-      }
-    }
-
-    //测使用
-    // document.onkeydown = function(ev) {
-    //   ev = ev || event;
-    //   if(ev.keyCode == 13) {
-    //     var cell = getFocusCell(box);
-    //     // createNewLine(cell);//创建新的一行
-    //     // focusPrevCell(box);//移到上一个单元格
-    //     // focusNextCell(box);//移到下一个单元格
-    //     // exportData(box,props);//导出表格数据
-    //   }
-    // }
-    return {
-      focusPrevCell: function(el) {
-        focusPrevCell(el);
-      },
-      focusNextCell: function(el) {
-        focusNextCell(el);
-      },
-    }
-  };
-
-  //获取聚焦单元格
+  // 获取聚焦单元格
   function getFocusCell(el) {
-    var input = (el.getElementsByTagName('input') || [])[0];
-    return input?input.parentNode: input;
+    const input = (el.getElementsByTagName('input') || [])[0];
+    return input ? input.parentNode : input;
   }
 
-  //查找父级表格
+  // 查找父级表格
   function findTableParent(cell) {
     if (cell) {
-      parent = cell.parentNode;
+      const parent = cell.parentNode;
       if (parent && parent.tagName === 'TABLE') {
         return parent;
-      } else {
-        return findTableParent(parent);
       }
-    } else {
-      return undefined;
+      return findTableParent(parent);
     }
+    return undefined;
   }
 
-  //创建新的一行
+  // 创建新的一行
   function createNewLine(cell) {
-    var tr = document.createElement('tr');
-    var table = findTableParent(cell);
+    const tr = document.createElement('tr');
+    const table = findTableParent(cell);
     table.appendChild(tr);
-    var length = table.getElementsByTagName('tr')[1].getElementsByTagName('td').length;
-    for(var a = 0; a < length; a++) {
-      var td = document.createElement('td');
+    const cells = table.getElementsByTagName('tr')[2].getElementsByTagName('td');
+    Array.prototype.forEach.call(cells, () => {
+      const td = document.createElement('td');
       write(td);
       tr.appendChild(td);
-    }
+    });
   }
 
   // 编辑数据
   function write(cell) {
-    cell.addEventListener('click',function(ev) {
-      var input = document.createElement('input');
-      ev = ev || event;
-      if (ev.srcElement ===this) {
-        var value = cell.innerHTML;
+    cell.addEventListener('click', (e) => {
+      const input = document.createElement('input');
+      const ev = e || event;
+      if (ev.srcElement === cell) {
+        const value = cell.innerHTML;
         cell.appendChild(input);
         input.value = value;
         input.focus();
-        input.addEventListener('blur',function() {
-          setTimeout(function () {
+        input.addEventListener('blur', () => {
+          setTimeout(() => {
             cell.innerHTML = input.value;
           }, 1);
         });
       }
-    })
+    });
   }
 
-  //将输入框移到下一个单元格
+  // 将输入框移到下一个单元格
   function focusNextCell(el) {
-    var cell = getFocusCell(el);
+    const cell = getFocusCell(el);
     if (cell) {
-      if (cell.nextSibling == null) {
-        if (cell.parentNode.nextSibling==null) {//如果是最后一行
-          return;
-        }else{
-          var next = cell.parentNode.nextSibling.childNodes.item(1);
+      // 如果是最后一个
+      if (cell.nextSibling === null) {
+        // 如果是最后一行
+        if (cell.parentNode.nextSibling === null) {
+          // cell.click();
+        } else {
+          const next = cell.parentNode.nextSibling.childNodes.item(1);
           next.click();
         }
-      }else{
+      } else {
         cell.nextSibling.click();
       }
     }
   }
 
-  //将输入框移到上一个单元格
+  // 将输入框移到上一个单元格
   function focusPrevCell(el) {
-    var cell = getFocusCell(el);
-    console.log(cell.parentNode.previousSiblings);
-    if (cell.previousSibling.previousSibling == null) {//如果是每行第一个
-      if (cell.parentNode.previousSibling==null) {//如果是第一行
-        return;
-      }else{
-        var previous = cell.parentNode.previousSibling.lastChild;
-        if (previous == null) {
-          return
-        }else {
+    const cell = getFocusCell(el);
+    // 如果是每行第一个
+    if (cell.previousSibling.previousSibling === null) {
+      // 如果是第一行
+      if (cell.parentNode.previousSibling === null) {
+        cell.click();
+      } else {
+        const previous = cell.parentNode.previousSibling.lastChild;
+        if (previous === null) {
+          cell.click();
+        } else {
           previous.click();
         }
       }
-    }else{
+    } else {
       cell.previousSibling.click();
     }
   }
-
-  //导出表格数据
-  function exportData(el,props) {
-    var prop = props;
-    var table = el.getElementsByTagName('table');
-    for(var i = 0; i < prop.length; i++) {
-      prop[i].row = [];
-      var rowLength = table[i].getElementsByTagName('tr').length-2;
-      for (var q = 0; q < rowLength; q++) {
-        //导出指定行的数据
-        GetRowData = function(a) {
-          var rowData = table[i].getElementsByTagName('tr')[a];//获取当前行
-          var cells= rowData.getElementsByTagName('td');//获取当前行的单元格
-          prop[i].row[a]=[];
-          for (var j = 0; j < props[i].title.length-1; j++) {
-            prop[i].row[a][j] = (cells[j+1].innerHTML);
-          }
-        }
-        prop[i].row.push(GetRowData(q+2));
-      }
-    }
-    console.log(prop);
+  // 获取行数据
+  function getRowData(row) {
+    const rowData = [];
+    const cells = row.getElementsByTagName('td');
+    Array.prototype.forEach.call(cells, (cell) => {
+      rowData.push(cell.innerHTML);
+    });
+    return rowData.slice(1);
+  }
+  // 获取表数据
+  function getTableData(table) {
+    const TableData = [];
+    const rows = table.getElementsByTagName('tr');
+    Array.prototype.forEach.call(rows, (row) => {
+      TableData.push(getRowData(row));
+    });
+    return TableData.slice(2);
+  }
+  // 获取页面所有表数据
+  function exportData(el, props) {
+    const prop = props;
+    const tableData = [];
+    const tables = el.getElementsByTagName('table');
+    Array.prototype.forEach.call(tables, (table) => {
+      tableData.push(getTableData(table));
+    });
+    prop.forEach((item, index) => {
+      item.row = tableData[index];
+    });
     return prop;
   }
-})(window)
+  weeklyTable.init = (box, props) => {
+    props.forEach((item) => {
+      const table = document.createElement('table');
+      const col = item.title.length;
+      // 表格
+      box.appendChild(table);
 
-//用法
-var box = document.getElementById('box');
-props=[
-  {
-    head:'本周工作任务及完成',
-    title:['序号','工作任务描述','起止日期','完成率％','备注'],
-    row:[
-      [1,2,3,4],
-      [3,2,4,1]
-    ],
-  },
-  {
-    head:'本周工作任务及完成情况',
-    title:['序号','工作任务描述','起止日期','备注'],
-    row:[
-    ],
+      // 标题
+      const header = document.createElement('tr');
+      const headerTxt = document.createElement('td');
+      headerTxt.className = 'table-header';
+      headerTxt.setAttribute('colspan', col);
+      headerTxt.innerHTML = item.head;
+      table.appendChild(header);
+      header.appendChild(headerTxt);
+
+      // 表头
+      const title = document.createElement('tr');
+      table.appendChild(title);
+      item.title.forEach((titlename) => {
+        const titleTxt = document.createElement('td');
+        titleTxt.className = 'table-title';
+        titleTxt.innerHTML = titlename;
+        title.appendChild(titleTxt);
+      });
+      // 数据
+      if (item.row.length === 0) {
+        const cells = document.createElement('tr');
+        table.appendChild(cells);
+        item.title.forEach(() => {
+          const cellTxt = document.createElement('td');
+          cells.appendChild(cellTxt);
+          write(cellTxt);
+        });
+      } else {
+        item.row.forEach((row) => {
+          const cells = document.createElement('tr');
+          const number = document.createElement('td');
+          table.appendChild(cells);
+          cells.appendChild(number);
+          row.forEach((cell) => {
+            const cellTxt = document.createElement('td');
+            cellTxt.innerHTML = cell;
+            cells.appendChild(cellTxt);
+            write(cellTxt);
+          });
+        });
+      }
+    });
+
+    // // 测使用
+    // document.onkeydown = function(e) {
+    //   ev = e || event;
+    //   if (ev.keyCode == 13) {
+    //     var cell = getFocusCell(box);
+    //     // 创建新的一行
+    //     // createNewLine(cell);
+    //     // // 移到上一个单元格
+    //     // focusPrevCell(box);
+    //     // // 移到下一个单元格
+    //     // focusNextCell(box);
+    //     // // 导出表格数据
+    //     exportData(box,props);
+    //   }
+    // }
+    return {
+      focusPrevCell: (el) => {
+        focusPrevCell(el);
+      },
+      focusNextCell: (el) => {
+        focusNextCell(el);
+      },
+      createNewLine: (el) => {
+        createNewLine(el);
+      },
+      exportData: (el, array) => {
+        exportData(el, array);
+      },
+    };
+  };
+
+  if (global.weeklyTable) {
+    throw new Error('There has weekly table already, cannot export weekly table!');
+  } else {
+    global.weeklyTable = weeklyTable;
   }
-]
-var Table = init(box,props);
+})(window);
+
+// // 用法
+// const box = document.getElementById('box');
+// const props = [
+//   {
+//     head: '本周工作任务及完成',
+//     title: ['序号', '工作任务描述', '起止日期', '完成率％', '备注'],
+//     row: [
+//       [1, 2, 3, 4],
+//       [3, 2, 4, 1],
+//     ],
+//   },
+//   {
+//     head: '本周工作任务及完成情况',
+//     title: ['序号', '工作任务描述', '起止日期', '备注'],
+//     row: [
+//     ],
+//   },
+// ];
+// const Table = weeklyTable.init(box, props);
