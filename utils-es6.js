@@ -13,7 +13,7 @@
       shift: 'shiftKey',
       tab: 9,
       enter: 13,
-      delete: 46,
+      backspace: 8,
     };
 
     if (!element.bindKeys) {
