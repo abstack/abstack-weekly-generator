@@ -1,1 +1,16 @@
-A beautiful table generator of weekly
+# 周报表格生成器
+
+# 更新日志
+
+## v0.1.0 alpha
+1. Tab 切换到下一个单元格
+2. Shift + Tab 切换到上一个单元格
+3. Enter 新增一行
+
+## v0.1.1 alpha
+1. 增加删除行功能
+2. 修正文字量变多的 bug
+3. 改善说明文字显示效果
+
+## v0.2.0 alpha
+1. 新增一键复制功能
