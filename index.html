@@ -120,7 +120,7 @@
     width: 50px;
     pointer-events: none;
   }
-  table tr:first-child td:first-child:after,
+  /*table tr:first-child td:first-child:after,
   table tr:nth-child(2) td:first-child:after{
     content: none;
   }
@@ -128,7 +128,7 @@
     content: counter(item-number);
     display: block;
     text-align: center;
-  }
+  }*/
   table tr td input{
     position: absolute;
     z-index: 0;
@@ -164,34 +164,51 @@
       <li>填写完成后<button id="button-copy-table">轻轻按我一下</button>，去邮件正文中粘贴即可获得一个可自由伸展的漂亮周报表格！</li>
     </ol>
   </header>
-  <div id="table-container"></div>
+  <!-- <table>
+    <tbody>
+      <tr>
+        <td class="table-header" colspan="4">本周工作任务及完成情况</td>
+      </tr>
+      <tr>
+        <td class="table-title">工作任务描述</td>
+        <td class="table-title">起止日期</td>
+        <td class="table-title">完成率（%）</td>
+        <td class="table-title">备注</td>
+      </tr>
+      <tr>
+        <td>sdafadsf</td>
+        <td>asdf</td>
+        <td>sadf</td>
+        <td><input type="text" value="这是个 input，点击进行输入"></td>
+      </tr>
+    </tbody>
+  </table> -->
+  <div id="box"></div>
   <footer>
     CopyRight &copy; 2016 抽象科技前端团队出品
   </footer>
   <script src="utils-es6.js"></script>
   <script src="table.js"></script>
   <script>
-    var tableIns = weeklyTable.init(document.getElementById('table-container'), [
-      {
-        head: '本周工作任务及完成情况',
-        title: ['序号', '工作任务描述', '起止日期', '完成率％', '备注'],
-        row: [],
-      },
-      {
-        head: '下周安排',
-        title: ['序号', '工作任务描述', '起止日期', '备注'],
-        row: [],
-      },
-      {
-        head: '问题感言',
-        title: ['序号', '描述'],
-        row: [],
-      },
-    ]);
-
-    document.getElementById('button-copy-table').addEventListener('click', function () {
-      utils.copyElement(document.getElementById('table-container'));
-    });
+  // 用法
+  const box = document.getElementById('box');
+  const props = [
+    {
+      head: '本周工作任务及完成',
+      title: ['工作任务描述', '起止日期', '完成率％', '备注'],
+      row: [
+        [1, 2, 3, 4],
+        [3, 2, 4, 1],
+      ],
+    },
+    {
+      head: '本周工作任务及完成情况',
+      title: ['工作任务描述', '起止日期'],
+      row: [
+      ],
+    },
+  ];
+  const Table = weeklyTable.init(box, props);
   </script>
 </body>
 </html>

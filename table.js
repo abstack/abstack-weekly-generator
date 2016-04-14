@@ -56,15 +56,15 @@
           evt.preventDefault();
           createNewLine(input);
         });
-        // utils.bind(input, 'tab', (evt) => {
-        //   evt.preventDefault();
-        //   focusNextCell();
-        // });
+        utils.bind(input, 'tab', (evt) => {
+          evt.preventDefault();
+          focusNextCell();
+        });
         utils.bind(input, 'shift+tab', (evt) => {
           evt.preventDefault();
           focusPrevCell();
         });
-        utils.bind(input, 'tab', (evt) => {
+        utils.bind(input, 'shift+delete', (evt) => {
           evt.preventDefault();
           deleteLine(cell);
         });
@@ -189,7 +189,7 @@
         item.row.forEach((row, index) => {
           const cells = document.createElement('tr');
           const number = document.createElement('td');
-          number.innerHTML = index+1;
+          number.innerHTML = index + 1;
           table.appendChild(cells);
           cells.appendChild(number);
           row.forEach((cell) => {
