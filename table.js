@@ -33,6 +33,7 @@
       write(td);
       tr.appendChild(td);
     });
+    tr.getElementsByTagName('td')[1].click();
   }
 
   // 编辑数据
