@@ -78,10 +78,7 @@
   utils.save = () => localStorage.setItem('save', this.table.export());
 
   // enableLoadData
-  utils.enableLoadData = () => {
-    const customStorage = localStorage;
-    return customStorage.getItem('save');
-  };
+  utils.enableLoadData = () => localStorage.getItem('save');
 
   if (!global.utils) {
     global.utils = utils;
