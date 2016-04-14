@@ -1,7 +1,13 @@
 ((global) => {
   const utils = {};
 
-  // bind
+  /**
+   * 快捷键绑定
+   * @param  {DOM}      element  绑定元素
+   * @param  {String}   key      绑定按键，形如 'shift+tab'
+   * @param  {Function} callback 回调函数
+   * @return {Object}            链式操作
+   */
   utils.bind = (element, key, callback) => {
     const strategies = {
       shift: 'shiftKey',
@@ -45,7 +51,13 @@
     return this;
   };
 
-  // unbind
+  /**
+   * 快捷键解绑
+   * @param  {DOM}      element  绑定元素
+   * @param  {String}   key      绑定按键，形如 'shift+tab'
+   * @param  {Function} callback 回调函数
+   * @return {Object}            链式操作
+   */
   utils.unbind = (element, key, callback) => {
     if (element.bindKeys[key]) {
       element.removeEventListener('keydown', element.bindKeys[key]);
@@ -57,7 +69,10 @@
     return this;
   };
 
-  // copyElement
+  /**
+   * 复制元素
+   * @param  {DOM}      element  绑定元素
+   */
   utils.copyElement = (element) => {
     const customAlert = alert;
     const range = document.createRange();
@@ -74,11 +89,17 @@
     window.getSelection().removeAllRanges();
   };
 
-  // enableAutoSave
+  /**
+   * 保存到本地数据库
+   *
+   */
   utils.save = () => localStorage.setItem('save', this.table.export());
 
-  // enableLoadData
-  utils.enableLoadData = () => localStorage.getItem('save');
+  /**
+   * 从本地数据库读取
+   *
+   */
+  utils.load = () => localStorage.getItem('save');
 
   if (!global.utils) {
     global.utils = utils;
