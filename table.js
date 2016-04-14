@@ -1,9 +1,12 @@
-((global) => {
+((global, utils) => {
+  if (!utils) {
+    throw new Error('Table weekly module depends on utils, but not found!');
+  }
   const weeklyTable = {};
 
   // 获取聚焦单元格
-  function getFocusCell(el) {
-    const input = (el.getElementsByTagName('input') || [])[0];
+  function getFocusCell() {
+    const input = document.getElementsByTagName('input')[0];
     return input ? input.parentNode : input;
   }
 
@@ -42,7 +45,18 @@
         cell.appendChild(input);
         input.value = value;
         input.focus();
-        utils.bind(input, 'tab', focusNextCell(cell));
+        utils.bind(input, 'enter', (evt) => {
+          evt.preventDefault();
+          createNewLine(input);
+        });
+        utils.bind(input, 'tab', (evt) => {
+          evt.preventDefault();
+          focusNextCell();
+        });
+        utils.bind(input, 'shift+tab', (evt) => {
+          evt.preventDefault();
+          focusPrevCell();
+        });
         input.addEventListener('blur', () => {
           setTimeout(() => {
             cell.innerHTML = input.value;
@@ -53,14 +67,13 @@
   }
 
   // 将输入框移到下一个单元格
-  function focusNextCell(cell) {
+  function focusNextCell() {
+    const cell = getFocusCell();
     if (cell) {
       // 如果是最后一个
       if (cell.nextSibling === null) {
         // 如果是最后一行
-        if (cell.parentNode.nextSibling === null) {
-          // cell.click();
-        } else {
+        if (cell.parentNode.nextSibling !== null) {
           const next = cell.parentNode.nextSibling.childNodes.item(1);
           next.click();
         }
@@ -71,8 +84,8 @@
   }
 
   // 将输入框移到上一个单元格
-  function focusPrevCell(el) {
-    const cell = getFocusCell(el);
+  function focusPrevCell() {
+    const cell = getFocusCell();
     // 如果是每行第一个
     if (cell.previousSibling.previousSibling === null) {
       // 如果是第一行
@@ -170,22 +183,6 @@
         });
       }
     });
-
-    // 测使用
-    document.onkeydown = function(e) {
-      ev = e || event;
-      if (ev.keyCode == 13) {
-        var cell = getFocusCell(box);
-        // 创建新的一行
-        createNewLine(cell);
-        // // 移到上一个单元格
-        // focusPrevCell(box);
-        // // 移到下一个单元格
-        // focusNextCell(box);
-        // // 导出表格数据
-        exportData(box,props);
-      }
-    }
     return {
       focusPrevCell: (el) => {
         focusPrevCell(el);
@@ -207,7 +204,7 @@
   } else {
     global.weeklyTable = weeklyTable;
   }
-})(window);
+})(window, window.utils);
 
 // 用法
 const box = document.getElementById('box');
