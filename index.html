@@ -37,7 +37,8 @@
     color: #fff;
     text-shadow: 0 1px 2px #9A0D0D;
   }
-  header kbd{
+  header kbd,
+  header button{
     margin: 0 3px;
     display: inline-block;
     padding: 3px 10px;
@@ -49,6 +50,19 @@
     border: 1px solid #DE7F87;
     border-bottom: 3px solid #BC6A78;
     border-radius: 4px;
+  }
+  header button{
+    cursor: pointer;
+    outline: none;
+  }
+  header button:hover{
+    background-color: rgba(255,255,255,.6);
+  }
+  header button:active{
+    position: relative;
+    top: 1px;
+    margin-bottom: 1px;
+    border-bottom-width: 2px;
   }
   footer{
     margin-top: 60px;
@@ -148,7 +162,7 @@
       <li><kbd>Tab</kbd> 切换到下一个单元格;</li>
       <li><kbd>Shift</kbd> + <kbd>Tab</kbd> 切换到上一个单元格;</li>
       <li><kbd>Enter</kbd> 新增一行;</li>
-      <li>点击表格左上角，按住<kbd>Shift</kbd>，点击表格左下角，再按<kbd>Ctrl</kbd>/<kbd>&#8984;</kbd> + <kbd>C</kbd>，去邮件正文中粘贴即可获得一个可自由伸展的漂亮周报表格！</li>
+      <li>填写完成后<button id="button-copy-table">轻轻按我一下</button>，去邮件正文中粘贴即可获得一个可自由伸展的漂亮周报表格！</li>
     </ol>
   </header>
   <table>
