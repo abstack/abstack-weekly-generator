@@ -42,6 +42,7 @@
         cell.appendChild(input);
         input.value = value;
         input.focus();
+        utils.bind(input, 'tab', focusNextCell(cell));
         input.addEventListener('blur', () => {
           setTimeout(() => {
             cell.innerHTML = input.value;
@@ -52,8 +53,7 @@
   }
 
   // 将输入框移到下一个单元格
-  function focusNextCell(el) {
-    const cell = getFocusCell(el);
+  function focusNextCell(cell) {
     if (cell) {
       // 如果是最后一个
       if (cell.nextSibling === null) {
@@ -171,21 +171,21 @@
       }
     });
 
-    // // 测使用
-    // document.onkeydown = function(e) {
-    //   ev = e || event;
-    //   if (ev.keyCode == 13) {
-    //     var cell = getFocusCell(box);
-    //     // 创建新的一行
-    //     // createNewLine(cell);
-    //     // // 移到上一个单元格
-    //     // focusPrevCell(box);
-    //     // // 移到下一个单元格
-    //     // focusNextCell(box);
-    //     // // 导出表格数据
-    //     exportData(box,props);
-    //   }
-    // }
+    // 测使用
+    document.onkeydown = function(e) {
+      ev = e || event;
+      if (ev.keyCode == 13) {
+        var cell = getFocusCell(box);
+        // 创建新的一行
+        createNewLine(cell);
+        // // 移到上一个单元格
+        // focusPrevCell(box);
+        // // 移到下一个单元格
+        // focusNextCell(box);
+        // // 导出表格数据
+        exportData(box,props);
+      }
+    }
     return {
       focusPrevCell: (el) => {
         focusPrevCell(el);
@@ -209,22 +209,22 @@
   }
 })(window);
 
-// // 用法
-// const box = document.getElementById('box');
-// const props = [
-//   {
-//     head: '本周工作任务及完成',
-//     title: ['序号', '工作任务描述', '起止日期', '完成率％', '备注'],
-//     row: [
-//       [1, 2, 3, 4],
-//       [3, 2, 4, 1],
-//     ],
-//   },
-//   {
-//     head: '本周工作任务及完成情况',
-//     title: ['序号', '工作任务描述', '起止日期', '备注'],
-//     row: [
-//     ],
-//   },
-// ];
-// const Table = weeklyTable.init(box, props);
+// 用法
+const box = document.getElementById('box');
+const props = [
+  {
+    head: '本周工作任务及完成',
+    title: ['序号', '工作任务描述', '起止日期', '完成率％', '备注'],
+    row: [
+      [1, 2, 3, 4],
+      [3, 2, 4, 1],
+    ],
+  },
+  {
+    head: '本周工作任务及完成情况',
+    title: ['序号', '工作任务描述', '起止日期', '备注'],
+    row: [
+    ],
+  },
+];
+const Table = weeklyTable.init(box, props);
