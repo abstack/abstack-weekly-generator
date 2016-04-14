@@ -39,7 +39,11 @@
   // 删除当前行
   function deleteLine(cell) {
     const tr = cell.parentNode;
-    tr.parentNode.removeChild(tr);
+    const trs = tr.parentNode.getElementsByTagName('tr').length;
+    if (trs > 3) {
+      utils.confirm('确认删除吗？');
+      tr.parentNode.removeChild(tr);
+    }
   }
 
   // 编辑数据
@@ -64,7 +68,7 @@
           evt.preventDefault();
           focusPrevCell();
         });
-        utils.bind(input, 'shift+delete', (evt) => {
+        utils.bind(input, 'shift+backspace', (evt) => {
           evt.preventDefault();
           deleteLine(cell);
         });
