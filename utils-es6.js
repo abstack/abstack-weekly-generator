@@ -91,9 +91,14 @@
 
   /**
    * 保存到本地数据库
-   *
+   * @param  {Integer}  gap   秒数
+   * @param  {Object}   data  数据
    */
-  utils.save = () => localStorage.setItem('save', this.table.export());
+  utils.save = (gap, data) => {
+    setInterval(() => {
+      localStorage.setItem('saves', data);
+    }, gap * 1000);
+  };
 
   /**
    * 从本地数据库读取
@@ -102,6 +107,8 @@
   utils.load = () => localStorage.getItem('save');
 
   if (!global.utils) {
+    throw new Error('There has utils already, cannot export utils!');
+  } else {
     global.utils = utils;
   }
-})(window, window.table);
+})(window);
