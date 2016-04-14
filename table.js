@@ -26,14 +26,20 @@
   function createNewLine(cell) {
     const tr = document.createElement('tr');
     const table = findTableParent(cell);
-    table.appendChild(tr);
     const cells = table.getElementsByTagName('tr')[2].getElementsByTagName('td');
+    table.appendChild(tr);
     Array.prototype.forEach.call(cells, () => {
       const td = document.createElement('td');
       write(td);
       tr.appendChild(td);
     });
     tr.getElementsByTagName('td')[1].click();
+  }
+
+  // 删除当前行
+  function deleteLine(cell) {
+    const tr = cell.parentNode;
+    tr.parentNode.removeChild(tr);
   }
 
   // 编辑数据
@@ -50,13 +56,17 @@
           evt.preventDefault();
           createNewLine(input);
         });
-        utils.bind(input, 'tab', (evt) => {
-          evt.preventDefault();
-          focusNextCell();
-        });
+        // utils.bind(input, 'tab', (evt) => {
+        //   evt.preventDefault();
+        //   focusNextCell();
+        // });
         utils.bind(input, 'shift+tab', (evt) => {
           evt.preventDefault();
           focusPrevCell();
+        });
+        utils.bind(input, 'tab', (evt) => {
+          evt.preventDefault();
+          deleteLine(cell);
         });
         input.addEventListener('blur', () => {
           setTimeout(() => {
@@ -138,13 +148,14 @@
   weeklyTable.init = (box, props) => {
     props.forEach((item) => {
       const table = document.createElement('table');
-      const col = item.title.length;
+      const col = item.title.length + 1;
+      const header = document.createElement('tr');
+      const headerTxt = document.createElement('td');
+      const title = document.createElement('tr');
       // 表格
       box.appendChild(table);
 
       // 标题
-      const header = document.createElement('tr');
-      const headerTxt = document.createElement('td');
       headerTxt.className = 'table-header';
       headerTxt.setAttribute('colspan', col);
       headerTxt.innerHTML = item.head;
@@ -152,8 +163,10 @@
       header.appendChild(headerTxt);
 
       // 表头
-      const title = document.createElement('tr');
       table.appendChild(title);
+      const numberBox = document.createElement('td');
+      numberBox.innerHTML = '序号';
+      title.appendChild(numberBox);
       item.title.forEach((titlename) => {
         const titleTxt = document.createElement('td');
         titleTxt.className = 'table-title';
@@ -163,16 +176,20 @@
       // 数据
       if (item.row.length === 0) {
         const cells = document.createElement('tr');
+        const number = document.createElement('td');
+        number.innerHTML = '1';
         table.appendChild(cells);
+        cells.appendChild(number);
         item.title.forEach(() => {
           const cellTxt = document.createElement('td');
           cells.appendChild(cellTxt);
           write(cellTxt);
         });
       } else {
-        item.row.forEach((row) => {
+        item.row.forEach((row, index) => {
           const cells = document.createElement('tr');
           const number = document.createElement('td');
+          number.innerHTML = index+1;
           table.appendChild(cells);
           cells.appendChild(number);
           row.forEach((cell) => {
