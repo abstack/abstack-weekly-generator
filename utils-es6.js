@@ -9,11 +9,11 @@
       enter: 13,
     };
 
-    if (!element.bindButton) {
-      element.bindButton = {};
+    if (!element.bindKeys) {
+      element.bindKeys = {};
     }
 
-    element.bindButton[key] = (e) => {
+    element.bindKeys[key] = (e) => {
       const keys = key.split('+');
       const ev = e || window.event;
       let temp = true;
@@ -40,15 +40,15 @@
       }
     };
 
-    element.addEventListener('keydown', element.bindButton[key]);
+    element.addEventListener('keydown', element.bindKeys[key]);
 
     return this;
   };
 
   // unbind
   utils.unbind = (element, key, callback) => {
-    if (element.bindButton[key]) {
-      element.removeEventListener('keydown', element.bindButton[key]);
+    if (element.bindKeys[key]) {
+      element.removeEventListener('keydown', element.bindKeys[key]);
       if (callback) {
         callback.call(this);
       }
@@ -75,11 +75,7 @@
   };
 
   // enableAutoSave
-  utils.enableAutoSave = (gap) => {
-    setInterval(() => {
-      localStorage.setItem('save', table.export());
-    }, gap * 1000);
-  };
+  utils.save = () => localStorage.setItem('save', this.table.export());
 
   // enableLoadData
   utils.enableLoadData = () => {
@@ -90,4 +86,4 @@
   if (!global.utils) {
     global.utils = utils;
   }
-})(window);
+})(window, window.table);
