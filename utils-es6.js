@@ -75,28 +75,29 @@
    */
   utils.copyElement = (element) => {
     const customAlert = alert;
-    const range = document.createRange();
+    let range = null;
+
+    window.getSelection().removeAllRanges();
+    range = document.createRange();
     range.selectNodeContents(element);
     window.getSelection().addRange(range);
-
     try {
       const style = document.execCommand('copy');
       customAlert(`拷贝${style === true ? '成功' : '失败'}`);
     } catch (err) {
       customAlert('不能拷贝');
     }
-
     window.getSelection().removeAllRanges();
   };
 
   /**
    * 保存到本地数据库
    * @param  {Integer}  gap   秒数
-   * @param  {Object}   data  数据
+   * @param  {Function} data  回调函数
    */
   utils.save = (gap, data) => {
     setInterval(() => {
-      localStorage.setItem('saves', data);
+      localStorage.setItem('saves', data());
     }, gap * 1000);
   };
 
@@ -105,6 +106,16 @@
    *
    */
   utils.load = () => localStorage.getItem('save');
+
+  /**
+   * 封装confirm方法
+   *
+   */
+  utils.confirm = (data) => {
+    const customConfirm = confirm;
+    return customConfirm(data);
+  };
+
 
   if (global.utils) {
     throw new Error('There has utils already, cannot export utils!');
