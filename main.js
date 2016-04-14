@@ -180,7 +180,7 @@
       const input = document.createElement('input');
       const ev = e || event;
 
-      if (ev.srcElement === cell) {
+      if (ev.target === cell) {
         input.value = cell.innerHTML;
         cell.appendChild(input);
         input.focus();
