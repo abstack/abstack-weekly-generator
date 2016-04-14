@@ -206,23 +206,3 @@
     global.weeklyTable = weeklyTable;
   }
 })(window, window.utils);
-
-// 用法
-const box = document.getElementById('box');
-const props = [
-  {
-    head: '本周工作任务及完成',
-    title: ['序号', '工作任务描述', '起止日期', '完成率％', '备注'],
-    row: [
-      [1, 2, 3, 4],
-      [3, 2, 4, 1],
-    ],
-  },
-  {
-    head: '本周工作任务及完成情况',
-    title: ['序号', '工作任务描述', '起止日期', '备注'],
-    row: [
-    ],
-  },
-];
-const Table = weeklyTable.init(box, props);
