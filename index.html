@@ -77,37 +77,59 @@
     max-width: 90%;
     border-collapse: collapse;
   }
-  table td{
-    word-break: break-word;
-    border: 1px solid #D65957;
+  table tr{
+    counter-increment: item-number;
   }
-  table td.table-header{
+  table tr:first-child,
+  table tr:nth-child(2){
+    counter-increment: none;
+  }
+  table tr:first-child{
+    background-color: #E55A58;
+  }
+  table tr:first-child td{
     font-size: 18px;
     line-height: 40px;
     text-align: center;
     color: #fff;
-    background-color: #E55A58;
     cursor: default;
   }
-  table td.table-title{
+  table tr:nth-child(2){
+    background-color: #FFE7E9;
+  }
+  table tr:nth-child(2) td{
     color: #E55A58;
     line-height: 35px;
     text-align: center;
     font-size: 16px;
-    background-color: #FFE7E9;
     cursor: default;
   }
-  table td{
+  table tr td{
     position: relative;
     height: 30px;
     padding: 0 10px;
     font-size: 16px;
     line-height: 30px;
     color: #333;
+    word-break: break-word;
+    border: 1px solid #D65957;
     box-sizing: content-box;
     cursor: text;
   }
-  table td input{
+  table tr td:first-child{
+    width: 50px;
+    pointer-events: none;
+  }
+  table tr:first-child td:first-child:after,
+  table tr:nth-child(2) td:first-child:after{
+    content: none;
+  }
+  table tr td:first-child:after{
+    content: counter(item-number);
+    display: block;
+    text-align: center;
+  }
+  table tr td input{
     position: absolute;
     z-index: 0;
     top: -1px;
@@ -123,34 +145,11 @@
     transition: transform .3s, color .2s, box-shadow .3s;
     box-sizing: content-box;
   }
-  table td input:focus{
+  table tr td input:focus{
     z-index: 1;
     color: #D65957;
     box-shadow: 0 3px 15px rgba(0,0,0,.3);
     transform: scale(1.1);
-  }
-  table tr{
-    counter-increment: item-number;
-  }
-  table tr:first-child,
-  table tr:nth-child(2){
-    counter-increment: none;
-  }
-  table tr{
-    counter-increment: item-number;
-  }
-  table tr td:first-child{
-    width: 50px;
-    pointer-events: none;
-  }
-  table tr:first-child td:first-child:after,
-  table tr:nth-child(2) td:first-child:after{
-    content: none;
-  }
-  table tr td:first-child:after{
-    content: counter(item-number);
-    display: block;
-    text-align: center;
   }
   </style>
 </head>
