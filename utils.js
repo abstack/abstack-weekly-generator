@@ -79,9 +79,11 @@
     let range = null;
 
     // 创建br
+    const table = document.getElementsByTagName('table');
+    const lastTable = table[table.length - 1];
     const brNode = document.createElement('BR');
-    element.appendChild(brNode);
-    console.dir(element);
+    lastTable.appendChild(brNode);
+
     window.getSelection().removeAllRanges();
     range = document.createRange();
     range.selectNodeContents(element);
@@ -92,6 +94,9 @@
     } catch (err) {
       customAlert('不能拷贝');
     }
+
+    // 删除br
+    lastTable.removeChild(brNode);
     window.getSelection().removeAllRanges();
   };
 
