@@ -196,9 +196,16 @@
     prop.forEach((item, index) => {
       item.row = tableData[index];
     });
-    // console.log(localStorage.getItem('saves'));
-    weeklyTable.init(el, localStorage.getItem('saves'));
     return JSON.stringify(prop);
+  }
+
+  /**
+   * 导入数据
+   * @param  {json} localStorage中获得的数据
+   */
+  function importData(box, json) {
+    const props = JSON.parse(json);
+    weeklyTable.init(box, props);
   }
 
   /**
@@ -207,66 +214,70 @@
    * @param  {Array} props 表格配置
    * @return {weeklyTable}
    */
-  weeklyTable.init = (box, propsJson) => {
-    const props = eval(propsJson);
-    Array.prototype.forEach.call(props, (item) => {
-      const table = document.createElement('table');
-      const col = item.title.length + 1;
-      const header = document.createElement('tr');
-      const headerTxt = document.createElement('td');
-      const title = document.createElement('tr');
-      const number = document.createElement('td');
-      // 表格
-      box.appendChild(table);
+  weeklyTable.init = (box, props) => {
+    if (props instanceof Array) {
+      props.forEach((item) => {
+        const table = document.createElement('table');
+        const col = item.title.length + 1;
+        const header = document.createElement('tr');
+        const headerTxt = document.createElement('td');
+        const title = document.createElement('tr');
+        const number = document.createElement('td');
+        // 表格
+        box.appendChild(table);
 
-      // 标题
-      headerTxt.className = 'table-header';
-      headerTxt.setAttribute('colspan', col);
-      headerTxt.innerHTML = item.head;
-      table.appendChild(header);
-      header.appendChild(headerTxt);
+        // 标题
+        headerTxt.className = 'table-header';
+        headerTxt.setAttribute('colspan', col);
+        headerTxt.innerHTML = item.head;
+        table.appendChild(header);
+        header.appendChild(headerTxt);
 
-      // 表头
-      table.appendChild(title);
-      number.innerHTML = '序号';
-      number.className = 'table-title';
-      title.appendChild(number);
-      item.title.forEach((titlename) => {
-        const titleTxt = document.createElement('td');
-        titleTxt.className = 'table-title';
-        titleTxt.innerHTML = titlename;
-        title.appendChild(titleTxt);
-      });
-      // 数据
-      if (item.row.length === 0) {
-        const cells = document.createElement('tr');
-        const numberTxt = document.createElement('td');
-        table.appendChild(cells);
-        cells.appendChild(numberTxt);
-        item.title.forEach(() => {
-          const cellTxt = document.createElement('td');
-          cells.appendChild(cellTxt);
-          write(cellTxt);
+        // 表头
+        table.appendChild(title);
+        number.innerHTML = '序号';
+        number.className = 'table-title';
+        title.appendChild(number);
+        item.title.forEach((titlename) => {
+          const titleTxt = document.createElement('td');
+          titleTxt.className = 'table-title';
+          titleTxt.innerHTML = titlename;
+          title.appendChild(titleTxt);
         });
-        cells.getElementsByTagName('td')[0].innerHTML = '1';
-      } else {
-        item.row.forEach((row, index) => {
+        // 数据
+        if (item.row.length === 0) {
           const cells = document.createElement('tr');
-          const xuhao = document.createElement('td');
-          xuhao.innerHTML = index + 1;
+          const numberTxt = document.createElement('td');
           table.appendChild(cells);
-          cells.appendChild(xuhao);
-          row.forEach((cell) => {
+          cells.appendChild(numberTxt);
+          item.title.forEach(() => {
             const cellTxt = document.createElement('td');
-            cellTxt.innerHTML = cell;
             cells.appendChild(cellTxt);
             write(cellTxt);
           });
-        });
-      }
-    });
+          cells.getElementsByTagName('td')[0].innerHTML = '1';
+        } else {
+          item.row.forEach((row, index) => {
+            const cells = document.createElement('tr');
+            const xuhao = document.createElement('td');
+            xuhao.innerHTML = index + 1;
+            table.appendChild(cells);
+            cells.appendChild(xuhao);
+            row.forEach((cell) => {
+              const cellTxt = document.createElement('td');
+              cellTxt.innerHTML = cell;
+              cells.appendChild(cellTxt);
+              write(cellTxt);
+            });
+          });
+        }
+      });
+    } else {
+      throw new Error('Props is not array!');
+    }
     return {
-      exportData: () => exportData(box, props),
+      exportData: (el, array) => exportData(el, array),
+      importData: (el, json) => importData(el, json),
     };
   };
 
