@@ -78,16 +78,16 @@
     const customAlert = alert;
     let range = null;
 
-    // 创建br
+    // 创建tr
     const table = document.getElementsByTagName('table');
-    const lastTable = table[table.length - 1];
-    const brNode = document.createElement('BR');
-    lastTable.appendChild(brNode);
+    const newTr = document.createElement('tr');
+    table[table.length - 1].appendChild(newTr);
 
     window.getSelection().removeAllRanges();
     range = document.createRange();
     range.selectNodeContents(element);
     window.getSelection().addRange(range);
+
     try {
       const style = document.execCommand('copy');
       customAlert(`拷贝${style === true ? '成功' : '失败'}`);
@@ -95,8 +95,8 @@
       customAlert('不能拷贝');
     }
 
-    // 删除br
-    lastTable.removeChild(brNode);
+    // 删除tr
+    table[table.length - 1].removeChild(newTr);
     window.getSelection().removeAllRanges();
   };
 
