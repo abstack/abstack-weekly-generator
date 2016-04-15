@@ -203,9 +203,17 @@
    * 导入数据
    * @param  {json} localStorage中获得的数据
    */
-  function importData(box, json) {
-    const props = JSON.parse(json);
-    weeklyTable.init(box, props);
+  function importData(box, data) {
+    if (typeof(data) === 'string') {
+      try {
+        const datas = JSON.parse(data);
+        weeklyTable.init(box, datas);
+      } catch (err) {
+        throw new Error('Data is not support JSON.parse()!');
+      }
+    } else {
+      weeklyTable.init(box, data);
+    }
   }
 
   /**
@@ -276,8 +284,8 @@
       throw new Error('Props is not array!');
     }
     return {
-      exportData: (el, array) => exportData(el, array),
-      importData: (el, json) => importData(el, json),
+      exportData: () => exportData(box, props),
+      importData: (data) => importData(box, data),
     };
   };
 
