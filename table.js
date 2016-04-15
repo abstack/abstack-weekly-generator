@@ -77,7 +77,7 @@
     cell.addEventListener('click', (e) => {
       const input = document.createElement('input');
       const ev = e || event;
-      if (ev.srcElement === cell) {
+      if (ev.target === cell) {
         const value = cell.innerHTML;
         cell.appendChild(input);
         input.value = value;
