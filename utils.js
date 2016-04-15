@@ -78,6 +78,10 @@
     const customAlert = alert;
     let range = null;
 
+    // 创建br
+    const brNode = document.createElement('BR');
+    element.appendChild(brNode);
+    console.dir(element);
     window.getSelection().removeAllRanges();
     range = document.createRange();
     range.selectNodeContents(element);
@@ -94,16 +98,12 @@
   /**
    * 保存到本地数据库
    * @param  {Number}  gap   秒数
-   * @param  {Function} data  回调函数
+   * @param  {Function} sendData 传递值方法
+   * @return {Function} setInerval 定时器函数
    */
-  utils.save = (gap, data) => {
-    let timer;
-    if (!timer) {
-      timer = setInterval(() => {
-        localStorage.setItem('saves', data());
-      }, gap * 1000);
-    }
-  };
+  utils.save = (gap, sendData) => setInterval(() => {
+    localStorage.setItem('saves', sendData());
+  }, gap * 1000);
 
   /**
    * 从本地数据库读取
@@ -113,7 +113,7 @@
 
   /**
    * 封装confirm方法
-   * @return {confirm}           confirm方法
+   * @return {Function}           封装confirm方法
    */
   utils.confirm = (data) => {
     const customConfirm = confirm;
