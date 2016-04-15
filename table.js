@@ -196,7 +196,9 @@
     prop.forEach((item, index) => {
       item.row = tableData[index];
     });
-    return prop;
+    // console.log(localStorage.getItem('saves'));
+    weeklyTable.init(el, localStorage.getItem('saves'));
+    return JSON.stringify(prop);
   }
 
   /**
@@ -205,15 +207,15 @@
    * @param  {Array} props 表格配置
    * @return {weeklyTable}
    */
-  weeklyTable.init = (box, props) => {
-    props.forEach((item) => {
+  weeklyTable.init = (box, propsJson) => {
+    const props = eval(propsJson);
+    Array.prototype.forEach.call(props, (item) => {
       const table = document.createElement('table');
       const col = item.title.length + 1;
       const header = document.createElement('tr');
       const headerTxt = document.createElement('td');
       const title = document.createElement('tr');
       const number = document.createElement('td');
-      const numberTxt = document.createElement('td');
       // 表格
       box.appendChild(table);
 
@@ -238,6 +240,7 @@
       // 数据
       if (item.row.length === 0) {
         const cells = document.createElement('tr');
+        const numberTxt = document.createElement('td');
         table.appendChild(cells);
         cells.appendChild(numberTxt);
         item.title.forEach(() => {
@@ -249,9 +252,10 @@
       } else {
         item.row.forEach((row, index) => {
           const cells = document.createElement('tr');
-          numberTxt.innerHTML = index + 1;
+          const xuhao = document.createElement('td');
+          xuhao.innerHTML = index + 1;
           table.appendChild(cells);
-          cells.appendChild(numberTxt);
+          cells.appendChild(xuhao);
           row.forEach((cell) => {
             const cellTxt = document.createElement('td');
             cellTxt.innerHTML = cell;
