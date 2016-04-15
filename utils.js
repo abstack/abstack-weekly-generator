@@ -93,24 +93,27 @@
 
   /**
    * 保存到本地数据库
-   * @param  {Integer}  gap   秒数
+   * @param  {Number}  gap   秒数
    * @param  {Function} data  回调函数
    */
   utils.save = (gap, data) => {
-    setInterval(() => {
-      localStorage.setItem('saves', data());
-    }, gap * 1000);
+    let timer;
+    if (!timer) {
+      timer = setInterval(() => {
+        localStorage.setItem('saves', data());
+      }, gap * 1000);
+    }
   };
 
   /**
    * 从本地数据库读取
-   *
+   * @return {Object}           JSON对象
    */
   utils.load = () => localStorage.getItem('saves');
 
   /**
    * 封装confirm方法
-   *
+   * @return {confirm}           confirm方法
    */
   utils.confirm = (data) => {
     const customConfirm = confirm;
