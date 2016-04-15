@@ -56,8 +56,10 @@
     const table = tr.parentNode;
     const trs = tr.parentNode.getElementsByTagName('tr').length;
     if (trs > 3) {
-      utils.confirm('确认删除吗？');
-      tr.parentNode.removeChild(tr);
+      const r = utils.confirm('确认删除吗？');
+      if (r) {
+        tr.parentNode.removeChild(tr);
+      }
     }
     const tableRow = table.getElementsByTagName('tr');
     Array.prototype.forEach.call(tableRow, (tro, index) => {
