@@ -118,16 +118,8 @@
   }
   table tr td:first-child{
     width: 50px;
-    pointer-events: none;
-  }
-  table tr:first-child td:first-child:after,
-  table tr:nth-child(2) td:first-child:after{
-    content: none;
-  }
-  table tr td:first-child:after{
-    content: counter(item-number);
-    display: block;
     text-align: center;
+    pointer-events: none;
   }
   table tr td input{
     position: absolute;
@@ -161,6 +153,7 @@
       <li><kbd>Tab</kbd> 切换到下一个单元格;</li>
       <li><kbd>Shift</kbd> + <kbd>Tab</kbd> 切换到上一个单元格;</li>
       <li><kbd>Enter</kbd> 新增一行;</li>
+      <li><kbd>Shift</kbd> + <kbd>Backspace</kbd> / <kbd>Shift</kbd> + <kbd>Delete</kbd> (Mac only) 删除一行;</li>
       <li>填写完成后<button id="button-copy-table">轻轻按我一下</button>，去邮件正文中粘贴即可获得一个可自由伸展的漂亮周报表格！</li>
     </ol>
   </header>
