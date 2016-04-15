@@ -118,9 +118,24 @@
   }
   table tr td:first-child{
     width: 50px;
+<<<<<<< HEAD
     text-align: center;
     pointer-events: none;
   }
+=======
+    pointer-events: none;
+    text-align: center;
+  }
+  /*table tr:first-child td:first-child:after,
+  table tr:nth-child(2) td:first-child:after{
+    content: none;
+  }
+  table tr td:first-child:after{
+    content: counter(item-number);
+    display: block;
+    text-align: center;
+  }*/
+>>>>>>> Delete after for td
   table tr td input{
     position: absolute;
     z-index: 0;
@@ -167,17 +182,17 @@
     var tableIns = weeklyTable.init(document.getElementById('table-container'), [
       {
         head: '本周工作任务及完成情况',
-        title: ['序号', '工作任务描述', '起止日期', '完成率％', '备注'],
+        title: ['工作任务描述', '起止日期', '完成率％', '备注'],
         row: [],
       },
       {
         head: '下周安排',
-        title: ['序号', '工作任务描述', '起止日期', '备注'],
+        title: ['工作任务描述', '起止日期', '备注'],
         row: [],
       },
       {
         head: '问题感言',
-        title: ['序号', '描述'],
+        title: ['描述'],
         row: [],
       },
     ]);
