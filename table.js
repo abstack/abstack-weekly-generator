@@ -232,7 +232,7 @@
         const header = document.createElement('tr');
         const headerTxt = document.createElement('td');
         const title = document.createElement('tr');
-        const number = document.createElement('td');
+        const serialNumber = document.createElement('td');
         // 表格
         box.appendChild(table);
 
@@ -245,9 +245,9 @@
 
         // 表头
         table.appendChild(title);
-        number.innerHTML = '序号';
-        number.className = 'table-title';
-        title.appendChild(number);
+        serialNumber.innerHTML = '序号';
+        serialNumber.className = 'table-title';
+        title.appendChild(serialNumber);
         item.title.forEach((titlename) => {
           const titleTxt = document.createElement('td');
           titleTxt.className = 'table-title';
@@ -257,9 +257,9 @@
         // 数据
         if (item.row.length === 0) {
           const cells = document.createElement('tr');
-          const numberTxt = document.createElement('td');
+          const serialNumberTxt = document.createElement('td');
           table.appendChild(cells);
-          cells.appendChild(numberTxt);
+          cells.appendChild(serialNumberTxt);
           item.title.forEach(() => {
             const cellTxt = document.createElement('td');
             cells.appendChild(cellTxt);
@@ -269,10 +269,10 @@
         } else {
           item.row.forEach((row, index) => {
             const cells = document.createElement('tr');
-            const xuhao = document.createElement('td');
-            xuhao.innerHTML = index + 1;
+            const rowNumber = document.createElement('td');
+            rowNumber.innerHTML = index + 1;
             table.appendChild(cells);
-            cells.appendChild(xuhao);
+            cells.appendChild(rowNumber);
             row.forEach((cell) => {
               const cellTxt = document.createElement('td');
               cellTxt.innerHTML = cell;
