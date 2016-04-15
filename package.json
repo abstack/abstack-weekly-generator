@@ -1,6 +1,6 @@
 {
   "name": "weekly-table-generator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A beautiful table generator of weekly",
   "main": "index.js",
   "scripts": {
