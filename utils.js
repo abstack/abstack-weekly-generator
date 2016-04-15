@@ -106,7 +106,7 @@
    * 从本地数据库读取
    *
    */
-  utils.load = () => localStorage.getItem('save');
+  utils.load = () => localStorage.getItem('saves');
 
   /**
    * 封装confirm方法
