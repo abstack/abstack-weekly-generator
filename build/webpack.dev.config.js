@@ -2,9 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-  entry: {
-    main: ['./src/utils.js', './src/table.js']
-  },
+  entry: './src/index.js',
   output: {
     publicPath: 'dist',
     path: path.resolve(__dirname, '../dist'),
