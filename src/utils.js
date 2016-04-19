@@ -131,4 +131,4 @@ if (global.utils) {
   global.utils = utils;
 }
 
-export { utils };
+export default utils;
