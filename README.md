@@ -4,6 +4,11 @@
 1. `npm install` 安装依赖
 2. 'npm run dev' 启动 webpack-dev-server，即可进行开发
 
+## 发布
+1. `npm run build` 打包文件
+2. `npm version [patch, minor, major, prepatch, preminor, premajor, prerelease] -m "Upgrade to %s"` 更新项目版本号
+3. 在 `index.html` 中修改成对应版本号
+
 ## Todo 列表
 1. 邮件直接发送功能
 2. 表格行上下切换功能
