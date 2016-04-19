@@ -6,6 +6,7 @@ module.exports = {
     main: ['./src/utils.js', './src/table.js']
   },
   output: {
+    publicPath: 'dist',
     path: path.resolve(__dirname, '../dist'),
     filename: 'weekly.js'
   },
