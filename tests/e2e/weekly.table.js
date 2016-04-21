@@ -1,5 +1,6 @@
-casper.test.begin('weekly table', 6, function (test) {
+casper.test.begin('weekly table', 8, function (test) {
   var startSelector = '#table-container table:nth-child(1) tr:nth-child(3) td:nth-child(2)';
+  var clearBtn = '#button-clear-data';
   // 打开网页
   casper.start('http://localhost:8080/', function () {
     // 检查 HTTP 状态
@@ -10,9 +11,11 @@ casper.test.begin('weekly table', 6, function (test) {
     var testText = 'This is a test text!';
     var nextSelector = '#table-container table:nth-child(1) tr:nth-child(3) td:nth-child(3)';
     var Firtstcell = '#table-container table:nth-child(1) tr:last-child td:first-child';
+    var secondLine = '#table-container table:nth-child(1) tr:nth-child(2)';
     var first;
     var before;
     var after;
+
     casper.click(startSelector);
 
     // 输入测试文字
@@ -47,5 +50,26 @@ casper.test.begin('weekly table', 6, function (test) {
       test.assertEquals(before, after, 'Line has been deleted successfully');
     });
   });
+
+  casper.waitForSelector(clearBtn, function () {
+    var secondLine = '#table-container table:nth-child(1) tr:nth-child(2)';
+    // 按下清空按钮
+    casper.click(clearBtn);
+
+    casper.wait(0.5, function () {
+      // 检查是否第二行存在
+      test.assertDoesntExist(secondLine);
+    });
+    // casper.setFilter('open.location', function(location) {
+    //   return /\?+/.test(location) ? location += "&foo=42" : location += "?foo=42";
+    // });
+
+    // casper.setFilter("page.confirm", function(msg) {
+    //   // return msg === '数据清空后不可回复，是否继续？' ? false : true;
+    //   return msg;
+    // });
+    // 
+  })
+
   casper.run();
 });

@@ -23,8 +23,10 @@ let autoSaveTimer;
 let tableIns;
 
 function initTable(conf) {
+  const copyDefaultConf = JSON.parse(JSON.stringify(defaultConf));
+
   tableContainer.innerHTML = '';
-  tableIns = weeklyTable.init(tableContainer, conf || defaultConf);
+  tableIns = weeklyTable.init(tableContainer, conf || copyDefaultConf);
   clearInterval(autoSaveTimer);
   autoSaveTimer = utils.save(1, () => tableIns.exportData());
 }
@@ -33,7 +35,9 @@ function initTable(conf) {
   let conf;
 
   try {
-    conf = JSON.parse(utils.load());
+    if (utils.load() !== '') {
+      conf = JSON.parse(utils.load());
+    }
   } catch (e) { throw e; }
 
   initTable(conf);
@@ -49,6 +53,7 @@ document.getElementById('button-clear-data').addEventListener('click', () => {
       clearInterval(tempTimer);
       return '';
     });
+
     initTable();
   }
 });
