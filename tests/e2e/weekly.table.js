@@ -16,6 +16,8 @@ casper.test.begin('weekly table', 8, function (test) {
     var before;
     var after;
 
+    casper.click(clearBtn);
+
     casper.click(startSelector);
 
     // 输入测试文字
@@ -46,29 +48,23 @@ casper.test.begin('weekly table', 8, function (test) {
       // 按下 Shift+backspace 键
       casper.sendKeys(startSelector, casper.page.event.key.Backspace, {modifiers: 'shift'});
       after = this.getHTML(Firtstcell);
+
       //检查删除行是否起效
       test.assertEquals(before, after, 'Line has been deleted successfully');
     });
   });
 
   casper.waitForSelector(clearBtn, function () {
-    var secondLine = '#table-container table:nth-child(1) tr:nth-child(2)';
+    var secondLine = '#table-container table:nth-child(1) tr:nth-child(4)';
+
+    casper.click(startSelector)
+    casper.sendKeys(startSelector, casper.page.event.key.Enter);
+
     // 按下清空按钮
     casper.click(clearBtn);
 
-    casper.wait(0.5, function () {
-      // 检查是否第二行存在
-      test.assertDoesntExist(secondLine);
-    });
-    // casper.setFilter('open.location', function(location) {
-    //   return /\?+/.test(location) ? location += "&foo=42" : location += "?foo=42";
-    // });
-
-    // casper.setFilter("page.confirm", function(msg) {
-    //   // return msg === '数据清空后不可回复，是否继续？' ? false : true;
-    //   return msg;
-    // });
-    // 
+    // 检查是否第四行存在
+    test.assertDoesntExist(secondLine);
   })
 
   casper.run();
