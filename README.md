@@ -2,7 +2,11 @@
 
 ## 开发
 1. `npm install` 安装依赖
-2. 'npm run dev' 启动 webpack-dev-server，即可进行开发
+2. `npm run dev` 启动 webpack-dev-server，即可进行开发
+
+## 测试
+1. `npm run e2e` 运行端到端测试，注：在执行前请先使用 `npm run dev` 将前端服务器运行起来
+2. `npm run unit` 运行单元测试
 
 ## 发布
 1. `npm run build` 打包文件
@@ -19,7 +23,7 @@
 
 ### v1.0.3
 1. 添加项目构建脚本
-2. 添加首个 E2E 测试脚本
+2. 添加首个 e2e 测试脚本
 
 ### v1.0.2
 1. 添加版本号到网站头部
